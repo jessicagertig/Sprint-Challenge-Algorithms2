@@ -3,12 +3,14 @@
 ## Exercise I
 
 a)
+O(n)
 
 
 b)
-
+O(nlogn)
 
 c)
+O(n)
 
 ## Exercise II
 
