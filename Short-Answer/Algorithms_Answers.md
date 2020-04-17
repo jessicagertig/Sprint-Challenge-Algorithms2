@@ -33,3 +33,5 @@ def find_floor(n):
       if y is egg broken true:
         return y
 
+runtime complexity worst is O(n/2) = O(n)
+
