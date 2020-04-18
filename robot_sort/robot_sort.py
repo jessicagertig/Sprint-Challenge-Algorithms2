@@ -101,39 +101,35 @@ class SortingRobot:
         #Robots light has 3 methods: set it to on(True), set it to off(False), check if light_is_on returns true or false
         
         #Plan
-        #set robot's light to on(indicates the sorting is in progress)
-        #the robot starts out holding none, none will be used as a placeholder as each swap occurs
-        # pick up first item (index 0 will then contain 'None')
-        # move towards end (to next index)
-        # call compare_item: 
-        # if it returns 1 (held item is greater than item in front of robot) move towards end again 
-        # if it returns -1 (held item is less than item in front robot) call swap_item
-        # keep going until move towards the end returns false,
-        # then move towards the start
-        # new conditional, if compare returns 1, swap, if compare return -1, move to start, compare, if compare returns none, swap
+        #Changed it to a selection sort.
+
         self.set_light_on()
-        self.swap_item()
-        # self.move_towards_the_end()
+        
         while self.light_is_on() == True:
-            if self.can_move_towards_the_end() == True:
+            self.swap_item()
+
+            while self.can_move_towards_the_end() == True:
                 self.move_towards_the_end()
-                if self.compare_item() == -1:
-                    self.swap_item()
-                    self.set_light_on()
-                elif self.compare_item() == 1 and self.can_move_towards_the_end() == False:
-                    self.swap_item()
-                    self.set_light_off()
-        while self.light_is_on() == False:
-            if self.can_move_towards_the_start() == True:
-                self.move_towards_the_start()        
                 if self.compare_item() == 1:
                     self.swap_item()
-                    self.move_towards_the_start()    
+                    self.set_light_on()
                 elif self.compare_item() == None:
                     self.swap_item()
-                    self.set_light_on()
-                
-        
+
+            while self.can_move_towards_the_start() == True and self.light_is_on() == True:
+                if self.compare_item() == 1:
+                    self.move_towards_the_start()
+                elif self.compare_item() == -1:
+                    self.move_towards_the_start()
+                elif self.compare_item() == None:
+                    if self.can_move_towards_the_end() == False:
+                        self.swap_item()
+                        self.set_light_off()
+                        break
+                    else: 
+                        self.swap_item()
+                        self.move_towards_the_end()
+                        break
 
 
 
@@ -141,9 +137,11 @@ if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    # l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
 
-    # l = [15, 49, 26, 4]
+    # l = [15, 49, 4, 67, 45]
+
+    l = [1, -38, -95, 4, 23, -73, -65, -36, 85, 2, 58, -26, -55, 96]
 
     robot = SortingRobot(l)
 
